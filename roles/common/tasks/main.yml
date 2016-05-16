@@ -1,0 +1,26 @@
+---
+
+# For fixing https://github.com/openshift/openshift-ansible/issues/855
+- name: 'Install yum'
+  command: dnf install yum -y
+  become: True
+  become_user: root
+
+- name: 'Install common packages'
+  yum: name={{item}} state=present
+  become_user: root
+  become: True
+  with_items:
+    - keepassx
+    - rubygems
+    - ipython
+    - python-pip
+    - python-virtualenv
+    - python-tox
+    - owncloud-client
+    - java-1.8.0-openjdk
+    - flash-plugin
+    - gstreamer-plugins-bad
+
+
+  

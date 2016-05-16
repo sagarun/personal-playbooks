@@ -1,0 +1,11 @@
+---
+- hosts: all
+  roles:
+    - repos
+    - common
+    - git
+    - vim
+    - powerline
+    - { role: bash }
+    - { role: ssh }
+

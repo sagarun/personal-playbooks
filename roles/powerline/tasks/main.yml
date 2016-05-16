@@ -1,0 +1,9 @@
+---
+
+- name: Install powerline
+  yum: name=powerline state=present
+  tags: powerline
+
+- name: Install vim-powerline
+  yum: name=vim-powerline state=present
+  tags: powerline

@@ -1,0 +1,9 @@
+---
+
+- name: Install git
+  yum: name=git state=present
+  tags: git
+
+- name: Copy gitconfig
+  copy: src=gitconfig dest=/home/saga/.gitconfig
+  tags: git

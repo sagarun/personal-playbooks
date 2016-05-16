@@ -1,0 +1,5 @@
+---
+- include_vars: vault_bashrc.yml
+
+- name: Copy bashrc
+  copy: content="{{ bashrc }}" dest=/home/saga/.bashrc

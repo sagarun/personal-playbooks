@@ -1,0 +1,9 @@
+[user]
+	name = Arun S A G
+	email = sagarun@gmail.com
+[color]
+        status = auto
+        branch = auto
+        ui = auto
+[alias]
+	gl = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
