@@ -26,6 +26,7 @@
     - ipython
     - python-pip
     - python-virtualenv
+    - powertop
     - python-tox
     - owncloud-client
     - java-1.8.0-openjdk
@@ -35,4 +36,3 @@
     - gnome-shell-extension-apps-menu
     - gnome-shell-extension-places-menu
     - mozilla-https-everywhere
-    - mutt
