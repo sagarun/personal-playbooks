@@ -1,4 +1,5 @@
 ---
+- include_vars: vault_gitswitch.yml
 
 - name: Install git
   yum: name=git state=present
@@ -6,4 +7,13 @@
 
 - name: Copy gitconfig
   copy: src=gitconfig dest=/home/saga/.gitconfig
+  tags: git
+
+- name: Install gitswitch gem
+  command: gem install gitswitch
+  become: True
+  become_user: root
+
+- name: Copy gitswitch
+  copy: content="{{gitswitch}}" dest=/home/saga/.gitswitch
   tags: git
