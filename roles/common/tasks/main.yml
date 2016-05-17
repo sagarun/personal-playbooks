@@ -1,12 +1,22 @@
 ---
 
 # For fixing https://github.com/openshift/openshift-ansible/issues/855
-- name: 'Install yum'
+- name: Install yum
   command: dnf install yum -y
   become: True
   become_user: root
 
-- name: 'Install common packages'
+- name: Install google-talk-plugin
+  command: dnf install http://dl.google.com/linux/direct/google-talkplugin_current_x86_64.rpm -y
+  become: True
+  become_user: root
+
+- name: Install google-chrome
+  command: dnf install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -y
+  become: True
+  become_user: root
+
+- name: Install common packages
   yum: name={{item}} state=present
   become_user: root
   become: True
