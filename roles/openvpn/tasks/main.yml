@@ -1,0 +1,38 @@
+---
+- include_vars: vault_vpn.yml
+
+- name: Creates directory
+  file: path=/etc/openvpn state=directory owner=root group=root mode=755
+
+- name: Copy ca cert
+  copy: content="{{cacrt}}" dest=/etc/openvpn/ca.rsa.2048.crt owner=root group=root mode=644
+  become: yes
+  become_user: root
+  tags: openvpn
+
+- name: Copy crl cert
+  copy: content="{{crlpem}}" dest=/etc/openvpn/crl.rsa.2048.pem owner=root group=root mode=644
+  become: yes
+  become_user: root
+  tags: openvpn
+
+- name: Copy login
+  copy: content="{{login}}" dest=/etc/openvpn/login owner=root group=root mode=600
+  become: yes
+  become_user: root
+  tags: openvpn
+
+- name: Copy valley.conf
+  copy: content="{{valley_conf}}" dest=/etc/openvpn/valley.conf owner=root group=root mode=644
+  become: yes
+  become_user: root
+  tags: openvpn
+
+- name: Copy update-resolv-conf
+  copy: src=update-resolv-conf dest=/etc/openvpn/update-resolv-conf owner=root group=root mode=755
+  become: yes
+  become_user: root
+  tags: openvpn
+
+- systemd: enabled=yes name=openvpn@valley masked=0
+

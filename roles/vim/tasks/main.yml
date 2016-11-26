@@ -24,19 +24,27 @@
   changed_when: vim_flake8_installed|failed
 
 - name: Setup pathogen
-  command: /usr/bin/curl -LSso /home/saga/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-  tags: vim
+  get_url: 
+    url: https://tpo.pe/pathogen.vim
+    dest: /home/saga/.vim/autoload/pathogen.vim 
+    mode: 0644
+    owner: saga
+    group: saga
 
 - name: Setup vim-jedi
-  command: /usr/bin/git -C /home/saga/.vim/bundle/ clone --recursive https://github.com/davidhalter/jedi-vim.git
+  git: repo=https://github.com/davidhalter/jedi-vim.git dest=/home/saga/.vim/bundle/
+  become: yes
+  become_user: saga
   tags: vim
   when: jedi_vim_installed|failed
 
 - name: Setup vim-flake8
-  command: /usr/bin/git -C /home/saga/.vim/bundle/ clone https://github.com/nvie/vim-flake8.git
+  git: repo=https://github.com/nvie/vim-flake8.git dest=/home/saga/.vim/bundle/
+  become: yes
+  become_user: saga
   tags: vim
   when: vim_flake8_installed|failed
 
 - name: Copy vimrc
-  copy: src=vimrc dest=/home/saga/.vimrc
+  copy: src=vimrc dest=/home/saga/.vimrc owner=saga group=saga mode=644
   tags: vim

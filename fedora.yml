@@ -6,6 +6,7 @@
     - git
     - vim
     - powerline
+    - openvpn
     - { role: bash }
     - { role: ssh }
 

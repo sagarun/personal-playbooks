@@ -22,17 +22,27 @@
   become: True
   with_items:
     - keepassx
+    - mosh
     - rubygems
     - ipython
     - python-pip
+    - python2-dnf
+    - libselinux-python
+    - gstreamer-plugins-bad
     - python-virtualenv
     - powertop
     - python-tox
     - owncloud-client
     - java-1.8.0-openjdk
     - flash-plugin
-    - gstreamer-plugins-bad
     - vlc
     - gnome-shell-extension-apps-menu
     - gnome-shell-extension-places-menu
     - mozilla-https-everywhere
+    - libmpg123
+    - lame-libs
+
+- name: Install gstreamer
+  command: dnf install gstreamer{1,}-{plugin-crystalhd,ffmpeg,plugins-{good,ugly,bad{,-free,-nonfree,-freeworld,-extras}{,-extras}}} libmpg123 lame-libs --setopt=strict=0 -y
+  become: True
+  become_user: root

@@ -110,8 +110,8 @@ au BufNewFile,BufRead *.js,*.html,*.css
 " autocmd VimEnter * nmap <F3> :NERDTreeToggle<CR>
 " autocmd VimEnter * imap <F3> <Esc>:NERDTreeToggle<CR>a
 " let NERDTreeWinSize=35
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+" python from powerline.vim import setup as powerline_setup
+" python powerline_setup()
+" python del powerline_setup
 set laststatus=2
 set t_Co=256
