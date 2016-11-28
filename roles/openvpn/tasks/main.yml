@@ -2,37 +2,43 @@
 - include_vars: vault_vpn.yml
 
 - name: Creates directory
-  file: path=/etc/openvpn state=directory owner=root group=root mode=755
+  file: path=/etc/openvpn state=directory owner=root group=root mode=0755
+  become: True
+  become_user: root
+  tags: openvpn
 
 - name: Copy ca cert
-  copy: content="{{cacrt}}" dest=/etc/openvpn/ca.rsa.2048.crt owner=root group=root mode=644
-  become: yes
+  copy: content="{{cacrt}}" dest=/etc/openvpn/ca.rsa.2048.crt owner=root group=root mode=0644
+  become: True
   become_user: root
   tags: openvpn
 
 - name: Copy crl cert
-  copy: content="{{crlpem}}" dest=/etc/openvpn/crl.rsa.2048.pem owner=root group=root mode=644
-  become: yes
+  copy: content="{{crlpem}}" dest=/etc/openvpn/crl.rsa.2048.pem owner=root group=root mode=0644
+  become: True
   become_user: root
   tags: openvpn
 
 - name: Copy login
-  copy: content="{{login}}" dest=/etc/openvpn/login owner=root group=root mode=600
-  become: yes
+  copy: content="{{login}}" dest=/etc/openvpn/login owner=root group=root mode=0600
+  become: True
   become_user: root
   tags: openvpn
 
 - name: Copy valley.conf
-  copy: content="{{valley_conf}}" dest=/etc/openvpn/valley.conf owner=root group=root mode=644
-  become: yes
+  copy: content="{{valley_conf}}" dest=/etc/openvpn/valley.conf owner=root group=root mode=0644
+  become: True
   become_user: root
   tags: openvpn
 
 - name: Copy update-resolv-conf
-  copy: src=update-resolv-conf dest=/etc/openvpn/update-resolv-conf owner=root group=root mode=755
-  become: yes
+  copy: src=update-resolv-conf dest=/etc/openvpn/update-resolv-conf owner=root group=root mode=0755
+  become: True
   become_user: root
   tags: openvpn
 
-- systemd: enabled=yes name=openvpn@valley masked=0
+- systemd: enabled=yes name=openvpn@valley.service masked=0
+  become: True
+  become_user: root
+  tags: openvpn
 

@@ -1,0 +1,43 @@
+---
+- name: Install common packages
+  environment:
+      PATH: /bin:/sbin/:/usr/bin:/usr/sbin
+  become: True
+  become_user: root
+  apt: name={{item}} state=installed
+  with_items:
+       - mosh
+       - python-flake8
+       - byobu
+       - rtmpdump
+       - virtualenv
+       - vim
+       - git
+       - bash-completion
+       - perl-modules
+       - transmission-daemon
+       - aptitude
+       - openvpn
+       - nzbget
+       - dos2unix
+       - ipython
+       - pep8
+       - python-beautifulsoup
+       - zip
+       - pastebinit
+       - hfsprogs
+       - iptables-persistent
+       - dnsmasq
+       - tcpdump
+       - ifupdown
+       - python-markupsafe
+       - dmidecode
+       - unrar
+       - python-cryptography
+       - par2
+       - cryptsetup
+       - rsync
+       - nfs-kernel-server
+       - elinks
+       - lsof
+       - strace

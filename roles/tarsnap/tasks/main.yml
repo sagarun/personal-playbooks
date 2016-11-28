@@ -1,0 +1,33 @@
+---
+- include_vars: vault_tarsnap.yml
+
+- name: Install tarsnap
+  become: True
+  package: name=tarsnap state=latest
+
+- name: Store tarsnap.key
+  copy: content="{{tarsnap_key}}" dest=/home/{{ ansible_user }}/.ssh/tarsnap.key owner={{ ansible_user }} group={{ ansible_user }} mode=400
+
+- name: copy tarsnap.conf
+  copy: content="{{tarsnap_conf}}" dest=/etc/tarsnap.conf owner=root group=root mode=644
+  become: True
+
+- name: Copy tarsnap-generations
+  copy: src=tarsnap-generations.sh dest=/usr/bin/tarsnap-generations.sh owner=root group=root mode=755
+  become: True
+
+- name: Make tarsnap-cache
+  file: path=/var/tarsnap-cache state=directory owner={{ ansible_user }} group={{ ansible_user }} mode=755
+  become: True
+
+- name: Create file with backup directories for tarsnap
+  copy: content="/home/saga/yahoo\n" dest=/home/{{ansible_user}}/.tarsnap-backup owner={{ ansible_user }} group={{ ansible_user }} mode=644
+
+- name: Create log file
+  copy: content="" dest=/var/log/tarsnap-backup-laptop-yahoo-code.log owner={{ ansible_user }} group={{ ansible_user }} mode=644
+  become: True
+
+- cron: name="tarsnap" minute=0 hour=18
+        user="{{ansible_user}}" job="/usr/bin/tarsnap-generations.sh -f /home/{{ansible_user}}/.tarsnap-backup -h 1 -d 10 -w 4 -m 2 >> /var/log/tarsnap-backup-laptop-yahoo-code.log 2>&1" 
+        cron_file=tarsnap-cron
+  become: True

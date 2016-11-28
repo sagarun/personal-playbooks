@@ -1,0 +1,12 @@
+---
+- include_vars: vault_interfaces.yml
+
+- name: mkdir /etc/network
+  file: path=/etc/network state=directory owner=root group=root mode=755
+  become: True
+  become_user: root
+
+- name: copy /etc/network/interfaces
+  copy: content="{{interfaces}}" dest=/etc/network/interfaces owner=root group=root mode=644
+  become: True
+  become_user: root

@@ -1,0 +1,7 @@
+---
+- include_vars: vault_crypttab.yml
+
+- name: copy crypttab
+  copy: content="{{crypttab}}" dest=/etc/crypttab owner=root group=root mode=644
+  become: True
+  become_user: root

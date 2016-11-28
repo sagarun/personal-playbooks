@@ -41,6 +41,7 @@
     - mozilla-https-everywhere
     - libmpg123
     - lame-libs
+    - kodi
 
 - name: Install gstreamer
   command: dnf install gstreamer{1,}-{plugin-crystalhd,ffmpeg,plugins-{good,ugly,bad{,-free,-nonfree,-freeworld,-extras}{,-extras}}} libmpg123 lame-libs --setopt=strict=0 -y

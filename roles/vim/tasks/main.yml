@@ -1,50 +1,47 @@
 ---
-- name: Install vim
-  yum: name=vim-enhanced state=present
+- name: Create autoload directory
+  file: path=/home/{{ ansible_user }}/.vim/autoload state=directory owner="{{ ansible_user }}" group="{{ ansible_user }}" mode=0755 recurse=yes
   tags: vim
 
-- name: Setup .vim/autoload
-  file: path=/home/saga/.vim/autoload state=directory owner=saga group=saga mode=0755 recurse=yes
-  tags: vim
-
-- name: Setup .vim/bundle
-  file: path=/home/saga/.vim/bundle state=directory owner=saga group=saga mode=0755
+- name: Setup vim/bundle
+  file: path=/home/{{ ansible_user }}/.vim/bundle state=directory owner="{{ ansible_user }}" group="{{ ansible_user }}" mode=0755
   tags: vim
 
 - name: Is vim-jedi installed
-  shell: "[ -d /home/saga/.vim/bundle/jedi-vim ]"
+  shell: '[ -d /home/{{ ansible_user }}/.vim/bundle/jedi-vim ]'
   register: jedi_vim_installed
   ignore_errors: True
   changed_when: jedi_vim_installed|failed
 
 - name: Is vim-flake8 installed
-  shell: "[ -d /home/saga/.vim/bundle/vim-flake8 ]"
+  shell: '[ -d /home/{{ ansible_user }}/.vim/bundle/vim-flake8 ]'
   register: vim_flake8_installed
   ignore_errors: True
   changed_when: vim_flake8_installed|failed
 
 - name: Setup pathogen
   get_url: 
-    url: https://tpo.pe/pathogen.vim
-    dest: /home/saga/.vim/autoload/pathogen.vim 
+    url: https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+    validate_certs: no
+    dest: /home/{{ ansible_user }}/.vim/autoload/pathogen.vim 
     mode: 0644
-    owner: saga
-    group: saga
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
 
 - name: Setup vim-jedi
-  git: repo=https://github.com/davidhalter/jedi-vim.git dest=/home/saga/.vim/bundle/
+  git: repo=https://github.com/davidhalter/jedi-vim.git dest=/home/{{ansible_user}}/.vim/bundle/
   become: yes
-  become_user: saga
+  become_user: "{{ ansible_user }}"
   tags: vim
   when: jedi_vim_installed|failed
 
 - name: Setup vim-flake8
-  git: repo=https://github.com/nvie/vim-flake8.git dest=/home/saga/.vim/bundle/
+  git: repo=https://github.com/nvie/vim-flake8.git dest=/home/{{ ansible_user }}/.vim/bundle/
   become: yes
-  become_user: saga
+  become_user: "{{ ansible_user }}"
   tags: vim
   when: vim_flake8_installed|failed
 
 - name: Copy vimrc
-  copy: src=vimrc dest=/home/saga/.vimrc owner=saga group=saga mode=644
+  copy: src=vimrc dest=/home/{{ ansible_user }}/.vimrc owner="{{ ansible_user }}" group="{{ ansible_user }}" mode=644
   tags: vim
