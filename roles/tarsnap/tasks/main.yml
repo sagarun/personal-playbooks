@@ -24,10 +24,10 @@
   copy: content="/home/saga/yahoo\n" dest=/home/{{ansible_user}}/.tarsnap-backup owner={{ ansible_user }} group={{ ansible_user }} mode=644
 
 - name: Create log file
-  copy: content="" dest=/var/log/tarsnap-backup-laptop-yahoo-code.log owner={{ ansible_user }} group={{ ansible_user }} mode=644
+  copy: content="" dest=/var/log/tarsnap-backup-laptop.log owner={{ ansible_user }} group={{ ansible_user }} mode=644
   become: True
 
 - cron: name="tarsnap" minute=0 hour=18
-        user="{{ansible_user}}" job="/usr/bin/tarsnap-generations.sh -f /home/{{ansible_user}}/.tarsnap-backup -h 1 -d 10 -w 4 -m 2 >> /var/log/tarsnap-backup-laptop-yahoo-code.log 2>&1" 
+        user="{{ansible_user}}" job="/usr/bin/tarsnap-generations.sh -f /home/{{ansible_user}}/.tarsnap-backup -h 1 -d 10 -w 4 -m 2 >> /var/log/tarsnap-backup-laptop.log 2>&1"
         cron_file=tarsnap-cron
   become: True
