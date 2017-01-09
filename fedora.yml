@@ -1,9 +1,9 @@
 ---
 - hosts: all
   roles:
-    - tarsnap
     - repos
     - common
+    - tarsnap
     - git
     - vim
     - powerline

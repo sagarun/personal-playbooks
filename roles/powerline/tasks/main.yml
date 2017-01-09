@@ -3,7 +3,11 @@
 - name: Install powerline
   yum: name=powerline state=present
   tags: powerline
+  become: True
+  become_user: root
 
 - name: Install vim-powerline
   yum: name=vim-powerline state=present
   tags: powerline
+  become: True
+  become_user: root

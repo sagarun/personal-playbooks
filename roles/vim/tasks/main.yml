@@ -31,14 +31,14 @@
 - name: Setup vim-jedi
   git: repo=https://github.com/davidhalter/jedi-vim.git dest=/home/{{ansible_user}}/.vim/bundle/
   become: yes
-  become_user: "{{ ansible_user }}"
+  become_user: root
   tags: vim
   when: jedi_vim_installed|failed
 
 - name: Setup vim-flake8
-  git: repo=https://github.com/nvie/vim-flake8.git dest=/home/{{ ansible_user }}/.vim/bundle/
+  git: repo=https://github.com/nvie/vim-flake8.git dest=/home/{{ ansible_user }}/.vim/bundle/vim-flake8
   become: yes
-  become_user: "{{ ansible_user }}"
+  become_user: {{ ansible_user }}
   tags: vim
   when: vim_flake8_installed|failed
 

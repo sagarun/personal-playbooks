@@ -35,6 +35,8 @@
     - owncloud-client
     - java-1.8.0-openjdk
     - flash-plugin
+    - freetype-freeworld
+    - python2-flake8
     - vlc
     - gnome-shell-extension-apps-menu
     - gnome-shell-extension-places-menu
