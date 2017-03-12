@@ -2,7 +2,7 @@
 - include_vars: vault_config.yml
 
 - name: copy ssh config
-  copy: content="{{dotconfig}}" dest=/home/{{ansible_user}}/.ssh/config owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{dotconfig}}" dest=/home/{{ansible_user}}/.ssh/config owner={{ansible_user}} group={{ansible_user}} mode=600
 
 - name: copy id_rsa_yahoo_pub
   copy: content="{{id_rsa_yahoo_pub}}" dest=/home/{{ansible_user}}/.ssh/id_rsa_yahoo.pub owner={{ansible_user}} group={{ansible_user}} mode=400
