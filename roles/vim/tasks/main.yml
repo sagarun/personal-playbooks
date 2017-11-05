@@ -38,7 +38,7 @@
 - name: Setup vim-flake8
   git: repo=https://github.com/nvie/vim-flake8.git dest=/home/{{ ansible_user }}/.vim/bundle/vim-flake8
   become: yes
-  become_user: {{ ansible_user }}
+  become_user: "{{ ansible_user }}"
   tags: vim
   when: vim_flake8_installed|failed
 
