@@ -2,11 +2,8 @@
 - include_vars: vault_gitswitch.yml
 
 - name: Install git
-  package:
-    name: git
-    state: present
+  command: dnf install git -y
   become: True
-  become_user: root
   tags: git
 
 - name: Copy gitconfig

@@ -1,49 +1,20 @@
 ---
 
-# For fixing https://github.com/openshift/openshift-ansible/issues/855
-- name: Install yum
-  command: dnf install yum -y
-  become: True
-  become_user: root
-
 - name: Install google-talk-plugin
   command: dnf install http://dl.google.com/linux/direct/google-talkplugin_current_x86_64.rpm -y
   become: True
   become_user: root
 
-- name: Install google-chrome
-  command: dnf install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -y
-  become: True
-  become_user: root
+# Use chromium instead
+# - name: Install google-chrome
+#  command: dnf install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -y
+#  become: True
+#  become_user: root
 
 - name: Install common packages
-  yum: name={{item}} state=present
-  become_user: root
   become: True
-  with_items:
-    - keepassx
-    - mosh
-    - rubygems
-    - ipython
-    - python-pip
-    - python2-dnf
-    - libselinux-python
-    - gstreamer-plugins-bad
-    - python-virtualenv
-    - powertop
-    - python-tox
-    - owncloud-client
-    - java-1.8.0-openjdk
-    - flash-plugin
-    - freetype-freeworld
-    - python2-flake8
-    - vlc
-    - gnome-shell-extension-apps-menu
-    - gnome-shell-extension-places-menu
-    - mozilla-https-everywhere
-    - libmpg123
-    - lame-libs
-    - kodi
+  become_user: root
+  command: dnf install chromium keepassx mosh rubygems ipython3 python2-pip python3-dnf libselinux-python gstreamer-plugins-bad python-virtualenv powertop tox java flash-plugin freetype-freeworld python3-flake8 vlc mozilla-https-everywhere kodi -y
 
 - name: Install gstreamer
   command: dnf install gstreamer{1,}-{plugin-crystalhd,ffmpeg,plugins-{good,ugly,bad{,-free,-nonfree,-freeworld,-extras}{,-extras}}} libmpg123 lame-libs --setopt=strict=0 -y

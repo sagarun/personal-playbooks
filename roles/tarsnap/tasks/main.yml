@@ -3,7 +3,7 @@
 
 - name: Install tarsnap
   become: True
-  package: name=tarsnap state=latest
+  command: dnf install tarsnap -y
 
 - name: Store tarsnap.key
   copy: content="{{tarsnap_key}}" dest=/home/{{ ansible_user }}/.ssh/tarsnap.key owner={{ ansible_user }} group={{ ansible_user }} mode=400
