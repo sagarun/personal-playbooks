@@ -30,20 +30,18 @@
 # Install missing repo packages.
 
 - name: install rpmfusion-free yum repo
-  dnf:
+  package:
     name: http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
     state: present
   become: True
-  become_user: root
-  when: rpmfusion_free_installed|failed
+  when: ansible_facts['distribution'] == 'Fedora' or rpmfusion_free_installed|failed
 
 - name: install rpmfusion-nonfree yum repo
-  dnf:
+  package:
     name: http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
     state: present
   become: True
-  become_user: root
-  when: rpmfusion_nonfree_installed|failed
+  when: ansible_facts['distribution'] == 'Fedora' or rpmfusion_nonfree_installed|failed
 
 #- name: install livna yum repo
 #  yum:
@@ -53,9 +51,9 @@
 #  when: livna_installed|failed
 
 - name: install adobe yum repo
-  dnf:
+  package:
       name: http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
       state: present
   become: True
   become_user: root
-  when: adobe_installed|failed
+  when: ansible_facts['distribution'] == 'Fedora' or adobe_installed|failed

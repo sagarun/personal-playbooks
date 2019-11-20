@@ -4,14 +4,11 @@
 - name: Creates directory
   file: path=/etc/iptables state=directory owner=root group=root mode=755
   become: True
-  become_user: root
 
 - name: Copy iptables
   copy: content="{{v4rules}}" dest=/etc/iptables/rules.v4 owner=root group=root mode=644
   become: True
-  become_user: root
 
 - name: Iptables restore
   command: /sbin/iptables-restore /etc/iptables/rules.v4
   become: True
-  become_user: root

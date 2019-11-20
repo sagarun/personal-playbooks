@@ -1,23 +1,23 @@
 ---
 - name: Create autoload directory
-  file: path=/home/{{ ansible_user }}/.vim/autoload state=directory owner="{{ ansible_user }}" group="{{ ansible_user }}" mode=0755 recurse=yes
+  file: path=/home/{{ ansible_user }}/.vim/autoload state=directory owner={{ ansible_user }} group={{ ansible_user }} mode=0755 recurse=yes
   tags: vim
 
 - name: Setup vim/bundle
-  file: path=/home/{{ ansible_user }}/.vim/bundle state=directory owner="{{ ansible_user }}" group="{{ ansible_user }}" mode=0755
+  file: path=/home/{{ ansible_user }}/.vim/bundle state=directory owner={{ ansible_user }} group={{ ansible_user }} mode=0755
   tags: vim
 
 - name: Is vim-jedi installed
   shell: '[ -d /home/{{ ansible_user }}/.vim/bundle/jedi-vim ]'
   register: jedi_vim_installed
   ignore_errors: True
-  changed_when: jedi_vim_installed|failed
+  changed_when: "jedi_vim_installed.rc != 0"
 
 - name: Is vim-flake8 installed
   shell: '[ -d /home/{{ ansible_user }}/.vim/bundle/vim-flake8 ]'
   register: vim_flake8_installed
   ignore_errors: True
-  changed_when: vim_flake8_installed|failed
+  changed_when: "vim_flake8_installed.rc != 0"
 
 - name: Setup pathogen
   get_url: 
@@ -31,17 +31,14 @@
 - name: Setup vim-jedi
   git: repo=https://github.com/davidhalter/jedi-vim.git dest=/home/{{ansible_user}}/.vim/bundle/
   become: yes
-  become_user: root
   tags: vim
-  when: jedi_vim_installed|failed
+  when: jedi_vim_installed
 
 - name: Setup vim-flake8
   git: repo=https://github.com/nvie/vim-flake8.git dest=/home/{{ ansible_user }}/.vim/bundle/vim-flake8
-  become: yes
-  become_user: "{{ ansible_user }}"
   tags: vim
-  when: vim_flake8_installed|failed
+  when: vim_flake8_installed
 
 - name: Copy vimrc
-  copy: src=vimrc dest=/home/{{ ansible_user }}/.vimrc owner="{{ ansible_user }}" group="{{ ansible_user }}" mode=644
+  copy: src=vimrc dest=/home/{{ ansible_user }}/.vimrc owner={{ ansible_user }} group={{ ansible_user }} mode=644
   tags: vim

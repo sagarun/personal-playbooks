@@ -1,0 +1,9 @@
+---
+- hosts: all
+  roles:
+    - common
+    - git
+    - vim
+    - { role: bash }
+    - { role: ssh }
+

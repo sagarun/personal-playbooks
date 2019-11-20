@@ -1,6 +1,9 @@
 ---
-
 - name: Install powerline
-  command: dnf install powerline vim-powerline -y
+  package:
+     name:
+        - powerline
+        - vim-powerline
   tags: powerline
   become: True
+  ignore_error: True

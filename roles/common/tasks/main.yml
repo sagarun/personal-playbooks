@@ -3,20 +3,38 @@
 - name: Install google-talk-plugin
   command: dnf install http://dl.google.com/linux/direct/google-talkplugin_current_x86_64.rpm -y
   become: True
-  become_user: root
+  when: ansible_facts['distribution'] == 'Fedora'
+
+
 
 # Use chromium instead
 # - name: Install google-chrome
 #  command: dnf install https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm -y
 #  become: True
 #  become_user: root
-
-- name: Install common packages
+- name: Install desktop packages
+  package:
+     name:
+        - chromium
+        - keepassx
+        - vlc
+        - flash-plugin
+        - powertop
+        - kodi
+        - rubygems
+        - libselinux-python
+        - gstreamer-plugins-bad
+        - python-virtualenv
+        - freetype-freeworld
+        - mozilla-https-everywhere
+        - python3-dnf
+     state: latest
   become: True
-  become_user: root
-  command: dnf install chromium keepassx mosh rubygems ipython3 python2-pip python3-dnf libselinux-python gstreamer-plugins-bad python-virtualenv powertop tox java flash-plugin freetype-freeworld python3-flake8 vlc mozilla-https-everywhere kodi -y
+  when: ansible_facts['distribution'] == 'Fedora'
+  tags: fedora-rpms
 
 - name: Install gstreamer
   command: dnf install gstreamer{1,}-{plugin-crystalhd,ffmpeg,plugins-{good,ugly,bad{,-free,-nonfree,-freeworld,-extras}{,-extras}}} libmpg123 lame-libs --setopt=strict=0 -y
   become: True
   become_user: root
+  when: ansible_facts['distribution'] == 'Fedora'

@@ -2,19 +2,24 @@
 - include_vars: vault_gitswitch.yml
 
 - name: Install git
-  command: dnf install git -y
+  package:
+     name:
+        - git
+        - rubygems
+        - vim
+     state: latest
   become: True
   tags: git
 
 - name: Copy gitconfig
-  copy: src=gitconfig dest=/home/saga/.gitconfig
+  copy: src=gitconfig dest=/home/{{ ansible_user }}/.gitconfig
   tags: git
 
 - name: Install gitswitch gem
   command: gem install gitswitch
   become: True
-  become_user: root
+  ignore_errors: yes
 
 - name: Copy gitswitch
-  copy: content="{{gitswitch}}" dest=/home/saga/.gitswitch
+  copy: content="{{gitswitch}}" dest=/home/{{ ansible_user }}/.gitswitch
   tags: git
