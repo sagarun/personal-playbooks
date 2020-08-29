@@ -1,29 +1,48 @@
 ---
 - include_vars: vault_config.yml
+- name: conditional variables for osx
+  include_vars:
+    file: osx.yaml
+    name: ansible_group
+  when: ansible_os_family == 'Darwin'
+
+- name: conditional variables for linux
+  include_vars:
+    file: redhat.yaml
+    name: ansible_group
+  when: ansible_os_family == 'RedHat'
+
+- name: Create .ssh directory
+  file:
+    path: $HOME/.ssh
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_group.name }}"
+    mode: 0750
 
 - name: copy ssh config
-  copy: content="{{dotconfig}}" dest=/home/{{ansible_user}}/.ssh/config owner={{ansible_user}} group={{ansible_user}} mode=600
+  copy: content="{{dotconfig}}" dest={{ansible_env.HOME}}/.ssh/config owner={{ansible_user}} group={{ansible_group.name}} mode=600
 
 - name: copy id_rsa_yahoo_pub
-  copy: content="{{id_rsa_yahoo_pub}}" dest=/home/{{ansible_user}}/.ssh/id_rsa_yahoo.pub owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{id_rsa_yahoo_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_yahoo.pub owner={{ansible_user}} group={{ansible_group.name}} mode=400
 
 - name: copy id_rsa_yahoo
-  copy: content="{{id_rsa_yahoo}}" dest=/home/{{ansible_user}}/.ssh/id_rsa_yahoo owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{id_rsa_yahoo}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_yahoo owner={{ansible_user}} group={{ansible_group.name}} mode=400
 
 - name: copy id_rsa
-  copy: content="{{id_rsa}}" dest=/home/{{ansible_user}}/.ssh/id_rsa owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{id_rsa}}" dest={{ansible_env.HOME}}/.ssh/id_rsa owner={{ansible_user}} group={{ansible_group.name}} mode=400
 
 - name: copy id_rsa_pub
-  copy: content="{{id_rsa_pub}}" dest=/home/{{ansible_user}}/.ssh/id_rsa.pub owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{id_rsa_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa.pub owner={{ansible_user}} group={{ansible_group.name}} mode=400
 
 - name: copy id_rsa_fedora
-  copy: content="{{id_rsa_fedora}}" dest=/home/{{ansible_user}}/.ssh/id_rsa_fedora owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{id_rsa_fedora}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_fedora owner={{ansible_user}} group={{ansible_group.name}} mode=400
 
 - name: copy id_rsa_fedora_pub
-  copy: content="{{id_rsa_fedora_pub}}" dest=/home/{{ansible_user}}/.ssh/id_rsa_fedora.pub owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{id_rsa_fedora_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_fedora.pub owner={{ansible_user}} group={{ansible_group.name}} mode=400
 
 - name: copy id_rsa_docean
-  copy: content="{{id_rsa_docean}}" dest=/home/{{ansible_user}}/.ssh/id_rsa_docean owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{id_rsa_docean}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_docean owner={{ansible_user}} group={{ansible_group.name}} mode=400
 
 - name: copy id_rsa_fedora_pub
-  copy: content="{{id_rsa_docean_pub}}" dest=/home/{{ansible_user}}/.ssh/id_rsa_docean.pub owner={{ansible_user}} group={{ansible_user}} mode=400
+  copy: content="{{id_rsa_docean_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_docean.pub owner={{ansible_user}} group={{ansible_group.name}} mode=400

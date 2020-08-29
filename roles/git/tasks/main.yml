@@ -10,16 +10,28 @@
      state: latest
   become: True
   tags: git
+  when: ansible_os_family == 'RedHat'
+
+- name: Install git
+  homebrew:
+     name:
+        - git
+        - ruby
+        - vim
+     state: latest
+     update_homebrew: true
+  tags: git
+  when: ansible_os_family == 'Darwin'
 
 - name: Copy gitconfig
-  copy: src=gitconfig dest=/home/{{ ansible_user }}/.gitconfig
+  copy: src=gitconfig dest={{ansible_env.HOME}}/.gitconfig
   tags: git
 
 - name: Install gitswitch gem
-  command: gem install gitswitch
+  command: gem install gitswitch --user
   become: True
   ignore_errors: yes
 
 - name: Copy gitswitch
-  copy: content="{{gitswitch}}" dest=/home/{{ ansible_user }}/.gitswitch
+  copy: content="{{gitswitch}}" dest={{ansible_env.HOME}}/.gitswitch
   tags: git
