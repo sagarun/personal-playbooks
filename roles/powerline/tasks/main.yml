@@ -6,4 +6,3 @@
         - vim-powerline
   tags: powerline
   become: True
-  ignore_error: True

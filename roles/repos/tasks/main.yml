@@ -1,32 +1,5 @@
 ---
 
-# Check whether repo packages are installed before forcing a network download.
-
-- name: is the rpmfusion-free repo installed
-  command: rpm -q rpmfusion-free-release
-  register: rpmfusion_free_installed
-  ignore_errors: True
-  changed_when: rpmfusion_free_installed|failed
-
-- name: is the rpmfusion-nonfree repo installed
-  command: rpm -q rpmfusion-nonfree-release
-  register: rpmfusion_nonfree_installed
-  ignore_errors: True
-  changed_when: rpmfusion_nonfree_installed|failed
-
-#- name: is the livna repo installed
-#  command: rpm -q livna-release
-#  register: livna_installed
-#  ignore_errors: True
-#  changed_when: livna_installed|failed
-
-- name: is the adobe repo installed
-  command: rpm -q adobe-release-x86_64
-  register: adobe_installed
-  ignore_errors: True
-  changed_when: adobe_installed|failed
-
-
 # Install missing repo packages.
 
 - name: install rpmfusion-free yum repo
@@ -34,14 +7,14 @@
     name: http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_version }}.noarch.rpm
     state: present
   become: True
-  when: ansible_facts['distribution'] == 'Fedora' or rpmfusion_free_installed|failed
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: install rpmfusion-nonfree yum repo
   package:
     name: http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_version }}.noarch.rpm
     state: present
   become: True
-  when: ansible_facts['distribution'] == 'Fedora' or rpmfusion_nonfree_installed|failed
+  when: ansible_facts['distribution'] == 'Fedora'
 
 #- name: install livna yum repo
 #  yum:
@@ -56,4 +29,4 @@
       state: present
   become: True
   become_user: root
-  when: ansible_facts['distribution'] == 'Fedora' or adobe_installed|failed
+  when: ansible_facts['distribution'] == 'Fedora'

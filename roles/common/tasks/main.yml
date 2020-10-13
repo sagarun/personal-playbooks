@@ -22,7 +22,6 @@
         - powertop
         - kodi
         - rubygems
-        - libselinux-python
         - gstreamer-plugins-bad
         - python-virtualenv
         - freetype-freeworld

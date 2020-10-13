@@ -3,3 +3,7 @@
 
 - name: Copy bashrc
   copy: content="{{ bashrc }}" dest=/home/{{ansible_user}}/.bashrc
+
+- name: copy csd-wrapper.sh
+  copy: src=csd-wrapper.sh dest=/usr/local/bin/csd-wrapper.sh owner=root group=root mode=755
+  become: True
