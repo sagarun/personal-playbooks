@@ -17,32 +17,38 @@
     path: $HOME/.ssh
     state: directory
     owner: "{{ ansible_user }}"
-    group: "{{ ansible_group.name }}"
+    group: "{{ ansible_group }}"
     mode: 0750
 
 - name: copy ssh config
-  copy: content="{{dotconfig}}" dest={{ansible_env.HOME}}/.ssh/config owner={{ansible_user}} group={{ansible_group.name}} mode=600
+  copy: content="{{dotconfig}}" dest={{ansible_env.HOME}}/.ssh/config owner={{ansible_user}} group={{ansible_group}} mode=600
 
 - name: copy id_rsa_yahoo_pub
-  copy: content="{{id_rsa_yahoo_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_yahoo.pub owner={{ansible_user}} group={{ansible_group.name}} mode=400
+  copy: content="{{id_rsa_yahoo_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_yahoo.pub owner={{ansible_user}} group={{ansible_group}} mode=400
 
 - name: copy id_rsa_yahoo
-  copy: content="{{id_rsa_yahoo}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_yahoo owner={{ansible_user}} group={{ansible_group.name}} mode=400
+  copy: content="{{id_rsa_yahoo}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_yahoo owner={{ansible_user}} group={{ansible_group}} mode=400
 
 - name: copy id_rsa
-  copy: content="{{id_rsa}}" dest={{ansible_env.HOME}}/.ssh/id_rsa owner={{ansible_user}} group={{ansible_group.name}} mode=400
+  copy: content="{{id_rsa}}" dest={{ansible_env.HOME}}/.ssh/id_rsa owner={{ansible_user}} group={{ansible_group}} mode=400
 
 - name: copy id_rsa_pub
-  copy: content="{{id_rsa_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa.pub owner={{ansible_user}} group={{ansible_group.name}} mode=400
+  copy: content="{{id_rsa_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa.pub owner={{ansible_user}} group={{ansible_group}} mode=400
 
 - name: copy id_rsa_fedora
-  copy: content="{{id_rsa_fedora}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_fedora owner={{ansible_user}} group={{ansible_group.name}} mode=400
+  copy: content="{{id_rsa_fedora}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_fedora owner={{ansible_user}} group={{ansible_group}} mode=400
 
 - name: copy id_rsa_fedora_pub
-  copy: content="{{id_rsa_fedora_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_fedora.pub owner={{ansible_user}} group={{ansible_group.name}} mode=400
+  copy: content="{{id_rsa_fedora_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_fedora.pub owner={{ansible_user}} group={{ansible_group}} mode=400
 
 - name: copy id_rsa_docean
-  copy: content="{{id_rsa_docean}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_docean owner={{ansible_user}} group={{ansible_group.name}} mode=400
+  copy: content="{{id_rsa_docean}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_docean owner={{ansible_user}} group={{ansible_group}} mode=400
 
 - name: copy id_rsa_fedora_pub
-  copy: content="{{id_rsa_docean_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_docean.pub owner={{ansible_user}} group={{ansible_group.name}} mode=400
+  copy: content="{{id_rsa_docean_pub}}" dest={{ansible_env.HOME}}/.ssh/id_rsa_docean.pub owner={{ansible_user}} group={{ansible_group}} mode=400
+
+- name: copy id_ecdsa_pub
+  copy: content="{{id_ecdsa_pub}}" dest={{ansible_env.HOME}}/.ssh/id_ecdsa.pub owner={{ansible_user}} group={{ansible_group}} mode=400
+
+- name: copy id_ecdsa
+  copy: content="{{id_ecdsa}}" dest={{ansible_env.HOME}}/.ssh/id_ecdsa owner={{ansible_user}} group={{ansible_group}} mode=400
