@@ -39,7 +39,7 @@
   tags: git
 
 - name: Install gitswitch gem
-  command: gem install gitswitch --user
+  command: gem install gitswitch --user-install
   become: True
   ignore_errors: yes
 

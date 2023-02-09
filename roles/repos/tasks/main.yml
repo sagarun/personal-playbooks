@@ -1,6 +1,23 @@
 ---
 
 # Install missing repo packages.
+- name: Install gpg keys
+  package:
+     name:
+       - distribution-gpg-keys
+     state: present
+  become: True
+  when: ansible_facts['distribution'] == 'Fedora'
+
+- name: Import gpg keys for rpm fusion free
+  shell: rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-$(rpm -E %fedora)
+  become: True
+  when: ansible_facts['distribution'] == 'Fedora'
+
+- name: Import gpg keys for rpm fusion nonfree
+  shell: rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$(rpm -E %fedora)
+  become: True
+  when: ansible_facts['distribution'] == 'Fedora'
 
 - name: install rpmfusion-free yum repo
   package:
@@ -22,11 +39,3 @@
 #    state: present
 #  sudo: True
 #  when: livna_installed|failed
-
-- name: install adobe yum repo
-  package:
-      name: http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
-      state: present
-  become: True
-  become_user: root
-  when: ansible_facts['distribution'] == 'Fedora'
